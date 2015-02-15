@@ -1,14 +1,21 @@
-FROM centos:centos6
+FROM ubuntu:14.04.1
 MAINTAINER Hiroki Kubota hiro.k.0805+github@gmail.com
 
-# nginx intall
-RUN yum update -y && \
-yum install "http://nginx.org/packages/rhel/6/x86_64/RPMS/nginx-1.6.2-1.el6.ngx.x86_64.rpm" -y && \
-yum clean all
+# disable interactive installation
+ENV DEBIAN_FRONTEND noninteractive
 
+# nginx intall
+RUN \
+apt-get update -y && \
+apt-get upgrade -y && \
+apt-get install nginx-extras -y --no-install-recommends && \
+apt-get autoremove -y && \
+apt-get clean -y 
+
+# set config files
 ADD nginx.conf /etc/nginx/nginx.conf
-ADD default.conf /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/sites-available/default
 
 EXPOSE 80
 
-ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
