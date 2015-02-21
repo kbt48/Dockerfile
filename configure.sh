@@ -41,7 +41,7 @@ echo "Run php-fpm container..."
 docker run \
 	-d \
 	-P \
-	-v $DATA_DIR/nginx:/usr/share/nginx/html \
+	-v $DATA_DIR/nginx:/usr/share/docroot \
 	-v $LOG_DIR/php-fpm:/var/log/php-fpm \
 	--name php-fpm \
 	$PHP_FPM_IMAGE
@@ -53,8 +53,10 @@ echo "Run nginx container..."
 docker run \
 	-d \
 	-p 80:80 \
+	-p 9000:9000 \
+	-p 9001:9001 \
 	--name nginx \
 	--link php-fpm:php \
-	-v $DATA_DIR/nginx:/usr/share/nginx/user_docroot \
+	-v $DATA_DIR/nginx:/usr/share/docroot \
 	-v $LOG_DIR/nginx:/var/log/nginx \
 	$NGINX_IMAGE

@@ -15,7 +15,7 @@ apt-get clean -y
 # set config files
 ADD nginx.conf /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-available/default
-RUN mkdir /usr/share/nginx/user_docroot
+RUN mkdir /usr/share/docroot
 
 # open port for http/php/perl
 EXPOSE 80 9000 9001

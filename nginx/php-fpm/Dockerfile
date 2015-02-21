@@ -9,6 +9,8 @@ yum clean all
 
 ADD php-fpm.conf /etc/php-fpm.conf
 ADD www.conf /etc/php-fpm.d/www.conf
+RUN groupmod -g 1000 apache && usermod -u 1000 apache
+RUN mkdir /usr/share/docroot
 
 EXPOSE 9000
 
