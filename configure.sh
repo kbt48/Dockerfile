@@ -4,6 +4,7 @@ LIST='./container.list'
 DATA_DIR=/home/docker
 LOG_DIR=/var/log/docker
 NGINX_IMAGE='hiroki/nginx'
+PHP_FPM_IMAGE='hiroki/php-fpm'
 JENKINS_IMAGE='hiroki/jenkins'
 
 # Read container.list
@@ -35,9 +36,24 @@ else
 	echo "already exit log directory."
 fi
 
+# Run php-fpm container
+echo "Run php-fpm container..."
+docker run \
+	-d \
+	-p 9000:9000 \
+	-v $LOG_DIR/php-fpm:/var/log/php-fpm \
+	--name php-fpm \
+	$PHP_FPM_IMAGE
+
+sleep 3
+
 # Run nginx container
-docker run -d \
+echo "Run nginx container..."
+docker run \
+	-d \
 	-p 80:80 \
+	--link php-fpm:php-fpm \
 	-v $DATA_DIR/nginx:/usr/share/nginx/html \
 	-v $LOG_DIR/nginx:/var/log/nginx \
-	--name nginx $NGINX_IMAGE
+	--name nginx \
+	$NGINX_IMAGE
