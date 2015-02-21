@@ -40,7 +40,8 @@ fi
 echo "Run php-fpm container..."
 docker run \
 	-d \
-	-p 9000:9000 \
+	-P \
+	-v $DATA_DIR/nginx:/usr/share/nginx/html \
 	-v $LOG_DIR/php-fpm:/var/log/php-fpm \
 	--name php-fpm \
 	$PHP_FPM_IMAGE
@@ -52,8 +53,8 @@ echo "Run nginx container..."
 docker run \
 	-d \
 	-p 80:80 \
-	--link php-fpm:php-fpm \
-	-v $DATA_DIR/nginx:/usr/share/nginx/html \
-	-v $LOG_DIR/nginx:/var/log/nginx \
 	--name nginx \
+	--link php-fpm:php \
+	-v $DATA_DIR/nginx:/usr/share/nginx/user_docroot \
+	-v $LOG_DIR/nginx:/var/log/nginx \
 	$NGINX_IMAGE
