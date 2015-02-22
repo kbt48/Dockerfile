@@ -6,10 +6,7 @@ LOG_DIR=/var/log/docker
 NGINX_IMAGE='hiroki/nginx'
 PHP_FPM_IMAGE='hiroki/php-fpm'
 JENKINS_IMAGE='hiroki/jenkins'
-
-# Read container.list
-IFS=$'\n'
-CONTAINER_LIST=(`cat "$LIST"`)
+CONTAINER_LIST=(nginx php-fpm perl-cgi)
 
 # Create share directory between HOST and CONTAINER for LOG and permanent data.
 # Create container data directory.
@@ -53,8 +50,6 @@ echo "Run nginx container..."
 docker run \
 	-d \
 	-p 80:80 \
-	-p 9000:9000 \
-	-p 9001:9001 \
 	--name nginx \
 	--link php-fpm:php \
 	-v $DATA_DIR/nginx:/usr/share/docroot \
