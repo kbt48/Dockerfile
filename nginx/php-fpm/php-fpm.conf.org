@@ -57,4 +57,3 @@ daemonize = no
 ;;;;;;;;;;;;;;;;;;;;
 
 ; See /etc/php-fpm.d/*.conf
-

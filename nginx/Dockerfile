@@ -18,6 +18,6 @@ RUN rm /etc/nginx/sites-available/default
 RUN mkdir /usr/share/docroot
 
 # open port for http/php/perl
-EXPOSE 80 9000 9001
+EXPOSE 80
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

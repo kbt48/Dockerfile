@@ -1,4 +1,4 @@
-FROM centos:centos6
+FROM centos:centos7
 MAINTAINER Hiroki Kubota hiro.k.0805+github@gmail.com
 
 # Install required software
